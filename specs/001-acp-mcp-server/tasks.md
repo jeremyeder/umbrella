@@ -22,13 +22,13 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Initialize Node.js project with TypeScript 5.x and package.json
-- [ ] T002 Install production dependencies (@modelcontextprotocol/sdk, undici, zod, cosmiconfig, deepmerge, zod-validation-error)
-- [ ] T003 [P] Install development dependencies (typescript, @types/node, vitest, @vitest/coverage-v8, @vitest/ui, msw)
-- [ ] T004 [P] Configure TypeScript compiler in tsconfig.json with strict mode and ES2022 target
-- [ ] T005 [P] Configure Vitest test framework in vitest.config.ts with coverage thresholds (80% lines, 80% functions)
-- [ ] T006 [P] Create project directory structure (src/config/, src/tools/, src/client/, src/auth/, src/errors/, src/utils/, tests/)
-- [ ] T007 [P] Add npm scripts for build, test, lint, and start in package.json
+- [X] T001 Initialize Node.js project with TypeScript 5.x and package.json
+- [X] T002 Install production dependencies (@modelcontextprotocol/sdk, undici, zod, cosmiconfig, deepmerge, zod-validation-error)
+- [X] T003 [P] Install development dependencies (typescript, @types/node, vitest, @vitest/coverage-v8, @vitest/ui, msw)
+- [X] T004 [P] Configure TypeScript compiler in tsconfig.json with strict mode and ES2022 target
+- [X] T005 [P] Configure Vitest test framework in vitest.config.ts with coverage thresholds (80% lines, 80% functions)
+- [X] T006 [P] Create project directory structure (src/config/, src/tools/, src/client/, src/auth/, src/errors/, src/utils/, tests/)
+- [X] T007 [P] Add npm scripts for build, test, lint, and start in package.json
 
 ---
 
@@ -38,21 +38,21 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T008 [P] Define configuration schema with Zod validation in src/config/schema.ts
-- [ ] T009 [P] Define configuration type definitions in src/config/types.ts
-- [ ] T010 Implement configuration loader with cosmiconfig and precedence logic in src/config/loader.ts
-- [ ] T011 [P] Define custom error classes (AuthError, NotFoundError, RateLimitError, etc.) in src/errors/types.ts
-- [ ] T012 [P] Implement error handler with HTTP status mapping and actionable messages in src/errors/handler.ts
-- [ ] T013 [P] Implement logger with credential redaction in src/utils/logger.ts
-- [ ] T014 [P] Implement path validator for workspace security in src/utils/path-validator.ts
-- [ ] T015 [P] Define ACP API request/response types in src/client/types.ts
-- [ ] T016 Implement authentication provider with credential management in src/auth/provider.ts
-- [ ] T017 [P] Implement credential validator in src/auth/validator.ts
-- [ ] T018 Implement undici HTTP client wrapper with connection pooling in src/client/acp-client.ts
-- [ ] T019 [P] Implement exponential backoff retry logic in src/client/retry.ts
-- [ ] T020 [P] Implement in-memory caching layer with TTL in src/client/cache.ts
-- [ ] T021 Initialize MCP server with metadata in src/server.ts
-- [ ] T022 Create MCP server entry point with stdio transport in src/index.ts
+- [X] T008 [P] Define configuration schema with Zod validation in src/config/schema.ts
+- [X] T009 [P] Define configuration type definitions in src/config/types.ts
+- [X] T010 Implement configuration loader with cosmiconfig and precedence logic in src/config/loader.ts
+- [X] T011 [P] Define custom error classes (AuthError, NotFoundError, RateLimitError, etc.) in src/errors/types.ts
+- [X] T012 [P] Implement error handler with HTTP status mapping and actionable messages in src/errors/handler.ts
+- [X] T013 [P] Implement logger with credential redaction in src/utils/logger.ts
+- [X] T014 [P] Implement path validator for workspace security in src/utils/path-validator.ts
+- [X] T015 [P] Define ACP API request/response types in src/client/types.ts
+- [X] T016 Implement authentication provider with credential management in src/auth/provider.ts
+- [X] T017 [P] Implement credential validator in src/auth/validator.ts
+- [X] T018 Implement undici HTTP client wrapper with connection pooling in src/client/acp-client.ts
+- [X] T019 [P] Implement exponential backoff retry logic in src/client/retry.ts
+- [X] T020 [P] Implement in-memory caching layer with TTL in src/client/cache.ts
+- [X] T021 Initialize MCP server with metadata in src/server.ts
+- [X] T022 Create MCP server entry point with stdio transport in src/index.ts
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -66,19 +66,19 @@
 
 ### Implementation for User Story 1
 
-- [ ] T023 [P] [US1] Implement list_projects tool in src/tools/projects.ts
-- [ ] T024 [P] [US1] Implement create_project tool in src/tools/projects.ts
-- [ ] T025 [P] [US1] Implement get_project tool in src/tools/projects.ts
-- [ ] T026 [P] [US1] Implement delete_project tool in src/tools/projects.ts
-- [ ] T027 [P] [US1] Implement list_sessions tool in src/tools/sessions.ts
-- [ ] T028 [P] [US1] Implement create_session tool in src/tools/sessions.ts
-- [ ] T029 [P] [US1] Implement get_session tool in src/tools/sessions.ts
-- [ ] T030 [P] [US1] Implement update_session tool in src/tools/sessions.ts
-- [ ] T031 [P] [US1] Implement delete_session tool in src/tools/sessions.ts
-- [ ] T032 [US1] Register all project and session management tools in src/tools/index.ts
-- [ ] T033 [US1] Add tool response formatting for Claude Desktop display
-- [ ] T034 [US1] Add error handling with actionable messages for authentication failures
-- [ ] T035 [US1] Add validation for project/session parameters (name length, description length)
+- [X] T023 [P] [US1] Implement list_projects tool in src/tools/projects.ts
+- [X] T024 [P] [US1] Implement create_project tool in src/tools/projects.ts
+- [X] T025 [P] [US1] Implement get_project tool in src/tools/projects.ts
+- [X] T026 [P] [US1] Implement delete_project tool in src/tools/projects.ts
+- [X] T027 [P] [US1] Implement list_sessions tool in src/tools/sessions.ts
+- [X] T028 [P] [US1] Implement create_session tool in src/tools/sessions.ts
+- [X] T029 [P] [US1] Implement get_session tool in src/tools/sessions.ts
+- [X] T030 [P] [US1] Implement update_session tool in src/tools/sessions.ts
+- [X] T031 [P] [US1] Implement delete_session tool in src/tools/sessions.ts
+- [X] T032 [US1] Register all project and session management tools in src/tools/index.ts
+- [X] T033 [US1] Add tool response formatting for Claude Desktop display
+- [X] T034 [US1] Add error handling with actionable messages for authentication failures
+- [X] T035 [US1] Add validation for project/session parameters (name length, description length)
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently - users can create, list, get, update, and delete projects and sessions
 
@@ -92,13 +92,13 @@
 
 ### Implementation for User Story 2
 
-- [ ] T036 [P] [US2] Implement start_session tool in src/tools/execution.ts
-- [ ] T037 [P] [US2] Implement stop_session tool in src/tools/execution.ts
-- [ ] T038 [P] [US2] Implement get_session_status tool with caching (10s TTL) in src/tools/execution.ts
-- [ ] T039 [US2] Register all session execution tools in src/tools/index.ts
-- [ ] T040 [US2] Add progress indicator formatting for Claude display
-- [ ] T041 [US2] Add error handling for session state transitions (cannot start already running session)
-- [ ] T042 [US2] Add status caching with 10 second TTL to reduce backend load
+- [X] T036 [P] [US2] Implement start_session tool in src/tools/execution.ts
+- [X] T037 [P] [US2] Implement stop_session tool in src/tools/execution.ts
+- [X] T038 [P] [US2] Implement get_session_status tool with caching (10s TTL) in src/tools/execution.ts
+- [X] T039 [US2] Register all session execution tools in src/tools/index.ts
+- [X] T040 [US2] Add progress indicator formatting for Claude display
+- [X] T041 [US2] Add error handling for session state transitions (cannot start already running session)
+- [X] T042 [US2] Add status caching with 10 second TTL to reduce backend load
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently - users can execute and monitor sessions
 
@@ -112,13 +112,13 @@
 
 ### Implementation for User Story 3
 
-- [ ] T043 [P] [US3] Implement list_workspace_files tool with path validation in src/tools/workspace.ts
-- [ ] T044 [P] [US3] Implement get_workspace_file tool with path security checks in src/tools/workspace.ts
-- [ ] T045 [US3] Register workspace access tools in src/tools/index.ts
-- [ ] T046 [US3] Add file size limit handling (10MB warning) for large files
-- [ ] T047 [US3] Add binary file detection and base64 encoding support
-- [ ] T048 [US3] Add path traversal validation using path-validator utility
-- [ ] T049 [US3] Add MIME type detection and formatting hints for Claude display
+- [X] T043 [P] [US3] Implement list_workspace_files tool with path validation in src/tools/workspace.ts
+- [X] T044 [P] [US3] Implement get_workspace_file tool with path security checks in src/tools/workspace.ts
+- [X] T045 [US3] Register workspace access tools in src/tools/index.ts
+- [X] T046 [US3] Add file size limit handling (10MB warning) for large files
+- [X] T047 [US3] Add binary file detection and base64 encoding support
+- [X] T048 [US3] Add path traversal validation using path-validator utility
+- [X] T049 [US3] Add MIME type detection and formatting hints for Claude display
 
 **Checkpoint**: All core user stories (P1 + P2 for workspace access) should now be independently functional
 
@@ -132,12 +132,12 @@
 
 ### Implementation for User Story 4
 
-- [ ] T050 [P] [US4] Implement list_rfe_templates tool with template caching (300s TTL) in src/tools/rfe.ts
-- [ ] T051 [P] [US4] Implement create_rfe_workflow tool in src/tools/rfe.ts
-- [ ] T052 [US4] Register RFE workflow tools in src/tools/index.ts
-- [ ] T053 [US4] Add agent roster formatting for Claude display
-- [ ] T054 [US4] Add workflow progress tracking with per-agent status
-- [ ] T055 [US4] Add artifact path resolution for generated RFE documents
+- [X] T050 [P] [US4] Implement list_rfe_templates tool with template caching (300s TTL) in src/tools/rfe.ts
+- [X] T051 [P] [US4] Implement create_rfe_workflow tool in src/tools/rfe.ts
+- [X] T052 [US4] Register RFE workflow tools in src/tools/index.ts
+- [X] T053 [US4] Add agent roster formatting for Claude display
+- [X] T054 [US4] Add workflow progress tracking with per-agent status
+- [X] T055 [US4] Add artifact path resolution for generated RFE documents
 
 **Checkpoint**: All P1 and P2 user stories should now be complete and independently functional
 
