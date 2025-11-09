@@ -683,6 +683,353 @@ interface MetricDefinitions {
     revenueImpact: number; // estimated
     competitiveAdvantage: string[];
   };
+
+  agent_engagement: {
+    activationRate: number; // % of agents activated per session
+    utilizationDistribution: Record<string, number>; // usage per agent type
+    collaborationPatterns: AgentCollaborationMetrics;
+    performanceMetrics: AgentPerformanceMetrics;
+  };
+}
+```
+
+#### 9.1a Agent Activation and Engagement Statistics (1 week)
+
+**Critical Requirement**: Track comprehensive statistics on agent activation, engagement patterns, and collaboration effectiveness to optimize the 16-agent topology and identify underutilized or overworked agents.
+
+**Agent Statistics Data Model**:
+```typescript
+// File: src/metrics/agent-engagement.ts
+interface AgentEngagementMetrics {
+  sessionId: string;
+  timestamp: Date;
+  agents: {
+    [agentName: string]: {
+      activated: boolean;
+      activationTime: Date;
+      duration: number; // milliseconds
+      tokensConsumed: number;
+      outputLength: number; // characters
+      revisionCount: number;
+      confidenceScore: number; // 0-100
+      humanOverrideCount: number;
+      collaborationEvents: AgentCollaborationEvent[];
+      performanceScore: number; // calculated metric
+    };
+  };
+  totalAgentsAvailable: number;
+  totalAgentsActivated: number;
+  activationRate: number; // percentage
+  sessionOutcome: 'success' | 'partial' | 'failure';
+}
+
+interface AgentCollaborationEvent {
+  sourceAgent: string;
+  targetAgent: string;
+  eventType: 'handoff' | 'conflict' | 'synthesis' | 'validation';
+  timestamp: Date;
+  contextTransferred: number; // bytes
+  success: boolean;
+  conflictResolved?: boolean;
+}
+
+interface AgentPerformanceMetrics {
+  [agentName: string]: {
+    totalActivations: number;
+    averageDuration: number;
+    successRate: number;
+    averageConfidence: number;
+    collaborationEffectiveness: number;
+    userSatisfactionScore: number;
+    costPerActivation: number; // estimated token cost
+    outputQuality: number; // human rating 1-5
+    revisionFrequency: number;
+  };
+}
+```
+
+**16-Agent Tracking System**:
+```typescript
+// File: src/metrics/sixteen-agent-tracker.ts
+class SixteenAgentTracker {
+  private readonly AGENT_NAMES = [
+    'requirements-analyst',
+    'technical-architect',
+    'ux-designer',
+    'business-analyst',
+    'security-reviewer',
+    'performance-analyst',
+    'integration-specialist',
+    'test-strategist',
+    'documentation-writer',
+    'compliance-checker',
+    'resource-estimator',
+    'risk-assessor',
+    'quality-assurance',
+    'deployment-planner',
+    'monitoring-designer',
+    'synthesis-coordinator'
+  ] as const;
+
+  async trackSession(sessionId: string): Promise<AgentSessionTracker> {
+    return {
+      startTime: Date.now(),
+      agents: this.initializeAgentTracking(),
+      collaborationGraph: new Map(),
+
+      activateAgent: (agentName: string) => {
+        this.recordActivation(sessionId, agentName);
+      },
+
+      recordCollaboration: (source: string, target: string, type: string) => {
+        this.recordAgentCollaboration(sessionId, source, target, type);
+      },
+
+      measurePerformance: () => {
+        return this.calculateAgentPerformance(sessionId);
+      }
+    };
+  }
+
+  async generateEngagementReport(
+    timeRange: DateRange
+  ): Promise<AgentEngagementReport> {
+    const sessions = await this.getSessionsInRange(timeRange);
+
+    return {
+      summary: {
+        totalSessions: sessions.length,
+        averageAgentsPerSession: this.calculateAverageActivation(sessions),
+        mostActiveAgent: this.findMostActiveAgent(sessions),
+        leastActiveAgent: this.findLeastActiveAgent(sessions),
+        collaborationEfficiency: this.calculateCollaborationEfficiency(sessions)
+      },
+
+      agentUtilization: this.calculateAgentUtilization(sessions),
+      collaborationPatterns: this.analyzeCollaborationPatterns(sessions),
+      performanceTrends: this.calculatePerformanceTrends(sessions),
+      recommendations: this.generateOptimizationRecommendations(sessions)
+    };
+  }
+}
+```
+
+**Real-time Agent Monitoring Dashboard**:
+```typescript
+// File: src/components/AgentEngagementDashboard.tsx
+interface AgentEngagementDashboardProps {
+  sessionId?: string;
+  timeRange: DateRange;
+  showRealTime: boolean;
+}
+
+const AgentEngagementDashboard: React.FC<AgentEngagementDashboardProps> = ({
+  sessionId,
+  timeRange,
+  showRealTime
+}) => {
+  const [engagementData, setEngagementData] = useState<AgentEngagementMetrics>();
+  const [realtimeStats, setRealtimeStats] = useState<RealtimeAgentStats>();
+
+  return (
+    <div className="agent-engagement-dashboard">
+      {/* Agent Activation Heatmap */}
+      <AgentActivationHeatmap data={engagementData} />
+
+      {/* Collaboration Flow Diagram */}
+      <AgentCollaborationFlow
+        collaborations={engagementData?.agents}
+        realtime={showRealTime}
+      />
+
+      {/* Performance Metrics Grid */}
+      <AgentPerformanceGrid metrics={engagementData?.performanceMetrics} />
+
+      {/* Utilization Statistics */}
+      <AgentUtilizationStats
+        utilization={engagementData?.utilizationDistribution}
+        recommendations={realtimeStats?.recommendations}
+      />
+    </div>
+  );
+};
+```
+
+**Key Engagement Metrics to Track**:
+
+1. **Activation Patterns**:
+   - Which agents are activated most frequently
+   - Sequence patterns (which agents typically follow others)
+   - Time-to-activation for each agent type
+   - Activation success rate vs. session outcome
+
+2. **Collaboration Effectiveness**:
+   - Agent-to-agent handoff success rates
+   - Context preservation across handoffs
+   - Conflict detection and resolution metrics
+   - Synthesis quality scores
+
+3. **Performance Indicators**:
+   - Output quality ratings (human-judged)
+   - Token efficiency (value per token consumed)
+   - Time-to-completion for each agent
+   - Revision frequency indicating accuracy
+
+4. **Utilization Analytics**:
+   - Under-utilized agents (candidates for removal/merging)
+   - Over-utilized agents (candidates for splitting/optimization)
+   - Seasonal/temporal usage patterns
+   - Team-specific agent preferences
+
+**Engagement Optimization Features**:
+```typescript
+// File: src/optimization/agent-optimizer.ts
+class AgentEngagementOptimizer {
+  async analyzeUnderutilization(
+    metrics: AgentEngagementMetrics[]
+  ): Promise<OptimizationRecommendations> {
+    return {
+      agentsToMerge: this.identifyMergeCandidates(metrics),
+      agentsToSplit: this.identifyOverloadedAgents(metrics),
+      workflowOptimizations: this.suggestWorkflowImprovements(metrics),
+      costOptimizations: this.calculateCostSavings(metrics)
+    };
+  }
+
+  async generateActivationStrategy(
+    featureType: string,
+    complexity: number,
+    deadline: Date
+  ): Promise<AgentActivationStrategy> {
+    // Recommend which agents to activate based on feature characteristics
+    return {
+      primaryAgents: ['requirements-analyst', 'technical-architect'],
+      conditionalAgents: this.selectBasedOnComplexity(complexity),
+      skipAgents: this.identifyUnnecessaryAgents(featureType),
+      sequenceOptimization: this.optimizeActivationSequence()
+    };
+  }
+}
+```
+
+**Integration with Existing Systems**:
+```typescript
+// File: src/integrations/agent-analytics.ts
+class AgentAnalyticsIntegration {
+  async exportToBI(metrics: AgentEngagementMetrics[]): Promise<void> {
+    // Export agent engagement data to business intelligence tools
+  }
+
+  async integrateWithCostTracking(
+    engagement: AgentEngagementMetrics
+  ): Promise<CostAnalysis> {
+    // Calculate actual costs based on agent usage
+    return {
+      totalTokenCost: this.calculateTokenCosts(engagement),
+      costPerAgent: this.calculateAgentCosts(engagement),
+      costEfficiency: this.calculateCostEfficiency(engagement),
+      budgetRecommendations: this.generateBudgetAdvice(engagement)
+    };
+  }
+
+  async correlateWithBusinessOutcomes(
+    engagementData: AgentEngagementMetrics[],
+    businessMetrics: BusinessOutcomeMetrics[]
+  ): Promise<CorrelationAnalysis> {
+    // Find correlations between agent usage and business success
+    return {
+      successPredictors: this.identifySuccessPatterns(engagementData, businessMetrics),
+      riskIndicators: this.identifyRiskPatterns(engagementData, businessMetrics),
+      optimizationOpportunities: this.findOptimizationOpportunities(engagementData)
+    };
+  }
+}
+```
+
+**Database Schema for Agent Statistics**:
+```sql
+-- File: migrations/001_agent_engagement_tables.sql
+CREATE TABLE agent_sessions (
+  id UUID PRIMARY KEY,
+  session_id VARCHAR(255) NOT NULL,
+  user_id VARCHAR(255) NOT NULL,
+  start_time TIMESTAMP NOT NULL,
+  end_time TIMESTAMP,
+  session_outcome VARCHAR(50),
+  total_agents_activated INTEGER,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE agent_activations (
+  id UUID PRIMARY KEY,
+  session_id VARCHAR(255) NOT NULL,
+  agent_name VARCHAR(100) NOT NULL,
+  activated_at TIMESTAMP NOT NULL,
+  deactivated_at TIMESTAMP,
+  duration_ms INTEGER,
+  tokens_consumed INTEGER,
+  output_length INTEGER,
+  confidence_score INTEGER,
+  revision_count INTEGER,
+  human_override_count INTEGER,
+  performance_score DECIMAL(5,2),
+  FOREIGN KEY (session_id) REFERENCES agent_sessions(session_id)
+);
+
+CREATE TABLE agent_collaborations (
+  id UUID PRIMARY KEY,
+  session_id VARCHAR(255) NOT NULL,
+  source_agent VARCHAR(100) NOT NULL,
+  target_agent VARCHAR(100) NOT NULL,
+  collaboration_type VARCHAR(50) NOT NULL,
+  timestamp TIMESTAMP NOT NULL,
+  context_transferred INTEGER,
+  success BOOLEAN,
+  conflict_resolved BOOLEAN,
+  FOREIGN KEY (session_id) REFERENCES agent_sessions(session_id)
+);
+
+CREATE INDEX idx_agent_sessions_user_time ON agent_sessions(user_id, start_time);
+CREATE INDEX idx_agent_activations_session ON agent_activations(session_id);
+CREATE INDEX idx_agent_collaborations_session ON agent_collaborations(session_id);
+```
+
+**Reporting and Alerting**:
+```typescript
+// File: src/monitoring/agent-alerts.ts
+class AgentEngagementAlerts {
+  async setupAlerts(): Promise<void> {
+    // Alert when agent utilization drops below threshold
+    this.createAlert('low_utilization', {
+      condition: 'agent_activation_rate < 0.6',
+      message: 'Agent activation rate dropped below 60%',
+      severity: 'warning'
+    });
+
+    // Alert when collaboration failures spike
+    this.createAlert('collaboration_failures', {
+      condition: 'collaboration_failure_rate > 0.2',
+      message: 'Agent collaboration failure rate above 20%',
+      severity: 'critical'
+    });
+
+    // Alert when performance scores decline
+    this.createAlert('performance_decline', {
+      condition: 'avg_performance_score < 3.0',
+      message: 'Average agent performance below acceptable threshold',
+      severity: 'warning'
+    });
+  }
+
+  async generateWeeklyReport(): Promise<WeeklyAgentReport> {
+    return {
+      executiveSummary: await this.generateExecutiveSummary(),
+      agentPerformanceRankings: await this.rankAgentsByPerformance(),
+      utilizationTrends: await this.calculateUtilizationTrends(),
+      costAnalysis: await this.generateCostAnalysis(),
+      optimizationRecommendations: await this.generateRecommendations()
+    };
+  }
 }
 ```
 
@@ -1030,6 +1377,7 @@ class ContextIntelligence {
 - Content quality improvements (Week 1-2)
 - Context engineering enhancements (Week 2-3)
 - Customer data integration (Week 3-4)
+- Agent engagement tracking system implementation (Week 2-4)
 
 **DevOps/Integration Team (2 engineers)**:
 - Performance monitoring setup (Week 1)
@@ -1057,11 +1405,15 @@ class ContextIntelligence {
 - [ ] Customer research data integrated into 90% of RFEs
 - [ ] Constitution framework deployed to 5+ teams
 - [ ] Metrics dashboard showing measurable improvements
+- [ ] Agent engagement tracking implemented with 16-agent visibility
+- [ ] Agent utilization rates >70% with balanced workload distribution
 
 ### Long-term (Month 3)
 - [ ] 80% reduction in idea-to-RFE cycle time
 - [ ] Enterprise integration with 3+ customer systems
 - [ ] Ambient AI features processing real workflows
+- [ ] Agent performance optimization achieving <2.0 revision rate per RFE
+- [ ] Cost optimization reducing agent token usage by 25% while maintaining quality
 
 ---
 
@@ -1091,11 +1443,13 @@ class ContextIntelligence {
 - Engineering team standup with progress against action items
 - Stakeholder email with metrics and blocker identification
 - User feedback collection and response planning
+- Agent engagement statistics review and optimization recommendations
 
 ### Monthly Reviews
 - Solutions architect feedback sessions
-- Metrics review and KPI adjustment
+- Metrics review and KPI adjustment (including agent performance trends)
 - Roadmap refinement based on learnings
+- Agent utilization analysis and topology optimization decisions
 
 ### Quarterly Business Reviews
 - ROI analysis and business impact measurement
